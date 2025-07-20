@@ -46,7 +46,15 @@ const items = [
     description: "最終進化形。強力な炎を操る。",
     type: "ほのお / ひこう",
     evolvesTo: null
-  }
+  },
+  {
+    id: 7,
+    name: "まめっち",
+    image: "images/mamecchi.jpg",
+    description: "勉強もスポーツも大好きで、何事にも一生懸命なたまごっち。<br>趣味は発明だけど、ときどき失敗することも…。絵はあまり得意じゃないみたい！？",
+    type: "まめ属",
+    evolvesTo: null
+  },
 ];
 
 const evoHtml = item.evolvesTo
