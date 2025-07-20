@@ -2,20 +2,25 @@ body {
   font-family: sans-serif;
   padding: 2em;
   background: #f2f2f2;
+  margin: 0;
 }
 
 #card-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  justify-content: center;
 }
 
+/* デフォルト：PC向け（3列） */
 .card {
   background: white;
   padding: 1em;
   border-radius: 8px;
-  width: 150px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  width: calc(25% - 1em); /* 約4列（余白込み） */
+  max-width: 220px;
+  min-width: 160px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   text-align: center;
   transition: transform 0.2s;
@@ -31,9 +36,33 @@ body {
   border-radius: 4px;
 }
 
+/* 詳細ページ画像 */
 .image {
-  width: 200px;
+  width: 100%;
+  max-width: 300px;
   height: auto;
   display: block;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
+}
+
+/* タブレット以下（2列） */
+@media screen and (max-width: 1024px) {
+  .card {
+    width: calc(33.33% - 1em);
+  }
+}
+
+/* スマホ（1列） */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 1em;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  h1, h2, p {
+    font-size: 1em;
+  }
 }
