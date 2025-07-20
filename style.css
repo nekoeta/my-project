@@ -107,19 +107,27 @@ main {
 
 /* スマホ対応 */
 @media screen and (max-width: 600px) {
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3列に分割 */
+    gap: 0.8em;
+    padding: 0 1em;
+  }
+
   .card {
-    width: 100%;
+    width: 100%; /* グリッドセルにフィット */
+    max-width: none; /* 幅制限解除 */
+    margin: 0; /* グリッドの隙間で調整 */
+    padding: 0.8em;
   }
 
+  /* 検索ボックスの幅調整 */
   .search-box {
-    width: 90%;
+    width: 100%;
+    margin-bottom: 1.2em;
   }
 
-  h1 {
-    font-size: 1.5em;
-  }
-
-  .card h2 {
-    font-size: 1em;
+  body {
+    padding: 0.5em 0;
   }
 }
