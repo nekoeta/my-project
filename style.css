@@ -30,3 +30,10 @@ body {
   height: auto;
   border-radius: 4px;
 }
+
+.image {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin-bottom: 16px;
+}
