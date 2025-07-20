@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ポケモン詳細</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="detail"></div>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = parseInt(params.get('id'));
+    const item = items.find(i => i.id === id);
+
+    if (item) {
+      document.getElementById('detail').innerHTML = `
+        <h1>${item.name}</h1>
+        <img src="${item.image}" alt="${item.name}">
+        <p>${item.description}</p>
+        <p><strong>タイプ:</strong> ${item.type}</p>
+        <a href="index.html">← 戻る</a>
+      `;
+    } else {
+      document.getElementById('detail').innerHTML = "<p>ポケモンが見つかりません</p>";
+    }
+  </script>
+</body>
+</html>

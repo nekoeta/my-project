@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ポケモン図鑑</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>ポケモン図鑑</h1>
+  <div id="card-container"></div>
+
+  <script src="data.js"></script>
+  <script>
+    const container = document.getElementById('card-container');
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.name}">
+        <h2>${item.name}</h2>
+      `;
+      card.onclick = () => {
+        // IDをURLに埋め込んで遷移
+        location.href = `detail.html?id=${item.id}`;
+      };
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
