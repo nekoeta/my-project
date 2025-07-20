@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ポケモン詳細</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="detail"></div>
-  <!-- 進化情報表示用 -->
-  <div id="evolution"></div>
+  <main class="container">
+    <section class="detail-card" id="detail"></section>
+    <section class="evolution-section" id="evolution"></section>
+    <div class="back-button">
+      <a href="index.html" class="button">← 図鑑に戻る</a>
+    </div>
+  </main>
 
   <script src="data.js"></script>
   <script>
@@ -16,39 +21,41 @@
     const id = parseInt(params.get('id'));
     const item = items.find(i => i.id === id);
 
+    const detail = document.getElementById('detail');
+    const evo = document.getElementById('evolution');
+
     if (item) {
-      document.getElementById('detail').innerHTML = `
+      detail.innerHTML = `
         <h1>${item.name}</h1>
-        <img src="${item.image}" alt="${item.name}" class="image">
+        <img src="${item.image}" alt="${item.name}の画像" class="image" />
         <p>${item.description}</p>
         <p><strong>タイプ:</strong> ${item.type}</p>
-        <a href="index.html">← 戻る</a>
       `;
 
-      const evoContainer = document.getElementById('evolution');
       if (item.evolvesTo) {
         if (Array.isArray(item.evolvesTo)) {
-          // 複数進化先の表示
-          evoContainer.innerHTML = `<h2>進化先</h2><ul>` +
-            item.evolvesTo.map(evo => 
-              `<li><a href="detail.html?id=${evo.id}">${evo.name}</a>（${evo.condition}）</li>`
-            ).join('') + `</ul>`;
+          evo.innerHTML = `
+            <h2>進化先</h2>
+            <ul class="evolution-list">
+              ${item.evolvesTo.map(evo => {
+                return `<li><a href="detail.html?id=${evo.id}">${evo.name}</a>（${evo.condition}）</li>`;
+              }).join("")}
+            </ul>
+          `;
         } else if (item.evolvesTo !== null) {
-          // 単一進化先の表示
           const evoItem = items.find(i => i.id === item.evolvesTo);
           if (evoItem) {
-            evoContainer.innerHTML = `
+            evo.innerHTML = `
               <h2>進化先</h2>
               <p><a href="detail.html?id=${evoItem.id}">${evoItem.name}</a></p>
             `;
           }
         }
       } else {
-        evoContainer.innerHTML = '';
+        evo.innerHTML = "";
       }
-
     } else {
-      document.getElementById('detail').innerHTML = "<p>ポケモンが見つかりません</p>";
+      detail.innerHTML = "<p>ポケモンが見つかりません</p>";
     }
   </script>
 </body>

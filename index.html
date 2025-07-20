@@ -1,29 +1,73 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ポケモン図鑑</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>ポケモン図鑑</h1>
-  <div id="card-container"></div>
+  <header>
+    <h1>ポケモン図鑑</h1>
+    <input
+      type="text"
+      id="search"
+      placeholder="ポケモン名で検索"
+      class="search-box"
+      aria-label="ポケモン名で検索"
+    />
+  </header>
+
+  <main>
+    <section id="card-container" class="card-grid" aria-label="ポケモン一覧"></section>
+  </main>
 
   <script src="data.js"></script>
   <script>
     const container = document.getElementById('card-container');
-    items.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
-        <h2>${item.name}</h2>
-      `;
-      card.onclick = () => {
-        // IDをURLに埋め込んで遷移
-        location.href = `detail.html?id=${item.id}`;
-      };
-      container.appendChild(card);
+    const searchInput = document.getElementById('search');
+
+    // 検索対象の全カードを保持
+    function renderCards(filter = '') {
+      container.innerHTML = ''; // 一旦消す
+
+      const keyword = filter.toLowerCase();
+      const filteredItems = items.filter(item =>
+        item.name.toLowerCase().includes(keyword)
+      );
+
+      filteredItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.tabIndex = 0;
+
+        const img = document.createElement('img');
+        img.src = item.image;
+        img.alt = `${item.name}の画像`;
+
+        const title = document.createElement('h2');
+        title.textContent = item.name;
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.addEventListener('click', () => {
+          location.href = `detail.html?id=${item.id}`;
+        });
+
+        container.appendChild(card);
+      });
+
+      if (filteredItems.length === 0) {
+        container.innerHTML = '<p>一致するポケモンが見つかりません</p>';
+      }
+    }
+
+    // 初期表示
+    renderCards();
+
+    // 入力イベントでフィルター実行
+    searchInput.addEventListener('input', (e) => {
+      renderCards(e.target.value);
     });
   </script>
 </body>
